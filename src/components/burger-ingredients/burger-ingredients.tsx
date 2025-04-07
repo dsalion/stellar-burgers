@@ -52,6 +52,9 @@ export const BurgerIngredients: FC = () => {
   return (
     <BurgerIngredientsUI
       currentTab={currentTab}
+      //buns={buns}
+      //mains={mains}
+      //sauces={sauces}
       buns={buns}
       mains={mains}
       sauces={sauces}
