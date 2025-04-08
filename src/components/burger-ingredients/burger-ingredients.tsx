@@ -3,12 +3,55 @@ import { useInView } from 'react-intersection-observer';
 
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
+import { TIngredient } from '@utils-types';
 
 export const BurgerIngredients: FC = () => {
   /** TODO: взять переменные из стора */
-  const buns = [];
-  const mains = [];
-  const sauces = [];
+  const buns: TIngredient[] = [
+    {
+      _id: '123',
+      name: 'string',
+      type: 'string',
+      proteins: 123,
+      fat: 222,
+      carbohydrates: 333,
+      calories: 444,
+      price: 555,
+      image: 'string',
+      image_large: 'string',
+      image_mobile: ' string'
+    }
+  ];
+  const mains: TIngredient[] = [
+    {
+      _id: '123',
+      name: 'string',
+      type: 'string',
+      proteins: 123,
+      fat: 222,
+      carbohydrates: 333,
+      calories: 444,
+      price: 555,
+      image: 'string',
+      image_large: 'string',
+      image_mobile: ' string'
+    }
+  ];
+  const sauces: TIngredient[] = [
+    {
+      _id: '123',
+      name: 'string',
+      type: 'string',
+      proteins: 123,
+      fat: 222,
+      carbohydrates: 333,
+      calories: 444,
+      price: 555,
+      image: 'string',
+      image_large: 'string',
+      image_mobile: ' string'
+    }
+  ];
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);
@@ -47,7 +90,7 @@ export const BurgerIngredients: FC = () => {
       titleSaucesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return null;
+  //return null;
 
   return (
     <BurgerIngredientsUI
