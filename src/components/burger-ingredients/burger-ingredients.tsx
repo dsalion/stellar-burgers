@@ -5,53 +5,24 @@ import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 import { TIngredient } from '@utils-types';
 
+import {
+  getIngridients,
+  getIngridientsSelector
+} from '../../services/ingridients/ingridients-slice';
+import { useAppDispatch, useAppSelector } from '../../services/store';
+
 export const BurgerIngredients: FC = () => {
   /** TODO: взять переменные из стора */
-  const buns: TIngredient[] = [
-    {
-      _id: '123',
-      name: 'string',
-      type: 'string',
-      proteins: 123,
-      fat: 222,
-      carbohydrates: 333,
-      calories: 444,
-      price: 555,
-      image: 'string',
-      image_large: 'string',
-      image_mobile: ' string'
-    }
-  ];
-  const mains: TIngredient[] = [
-    {
-      _id: '123',
-      name: 'string',
-      type: 'string',
-      proteins: 123,
-      fat: 222,
-      carbohydrates: 333,
-      calories: 444,
-      price: 555,
-      image: 'string',
-      image_large: 'string',
-      image_mobile: ' string'
-    }
-  ];
-  const sauces: TIngredient[] = [
-    {
-      _id: '123',
-      name: 'string',
-      type: 'string',
-      proteins: 123,
-      fat: 222,
-      carbohydrates: 333,
-      calories: 444,
-      price: 555,
-      image: 'string',
-      image_large: 'string',
-      image_mobile: ' string'
-    }
-  ];
+  const ingridients = useAppSelector(getIngridientsSelector);
+
+  console.log('ingridients', ingridients);
+  const buns: TIngredient[] = ingridients.filter((item) => item.type === 'bun');
+  const mains: TIngredient[] = ingridients.filter(
+    (item) => item.type === 'main'
+  );
+  const sauces: TIngredient[] = ingridients.filter(
+    (item) => item.type === 'sauce'
+  );
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);
