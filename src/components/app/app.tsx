@@ -14,8 +14,10 @@ import styles from './app.module.css';
 
 import { AppHeader, OrderInfo } from '@components';
 import { Route, Routes } from 'react-router-dom';
-import store from '../../services/store';
+import store, { useAppDispatch } from '../../services/store';
 import { Provider } from 'react-redux';
+import { useEffect } from 'react';
+import { getIngridients } from '../../services/ingridients/ingridients-slice';
 
 const App = () => (
   <div className={styles.app}>
