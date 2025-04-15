@@ -30,7 +30,11 @@ export const ordersSlice = createSlice({
     getOrdersLoadingSelector: (state) => state.loading,
     getOrdersErrorSelector: (state) => state.error,
     getOrdersTotalSelector: (state) => state.total,
-    getOrdersTotalTodaySelector: (state) => state.totalToday
+    getOrdersTotalTodaySelector: (state) => state.totalToday,
+    getOrdersTotalAndToday: (state) => ({
+      total: state.total,
+      totalToday: state.totalToday
+    })
   },
   extraReducers: (builder) => {
     builder
@@ -56,7 +60,8 @@ export const {
   getOrdersLoadingSelector,
   getOrdersErrorSelector,
   getOrdersTotalSelector,
-  getOrdersTotalTodaySelector
+  getOrdersTotalTodaySelector,
+  getOrdersTotalAndToday
 } = ordersSlice.selectors;
 
 export default ordersSlice.reducer;

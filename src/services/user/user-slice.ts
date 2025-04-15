@@ -1,4 +1,12 @@
-import { loginUserApi, registerUserApi } from '@api';
+import {
+  forgotPasswordApi,
+  getUserApi,
+  loginUserApi,
+  logoutApi,
+  registerUserApi,
+  resetPasswordApi,
+  updateUserApi
+} from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { error } from 'console';
 import { setCookie } from '../../utils/cookie';
@@ -50,6 +58,37 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const forgotPassword = createAsyncThunk(
+  'user/forgotPassword',
+  async (data: { email: string }) => {
+    const res = await forgotPasswordApi(data);
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  'user/resetPassword',
+  async (data: { password: string; token: string }) => {
+    const res = await resetPasswordApi(data);
+  }
+);
+
+export const getUserAp = createAsyncThunk('user/getUser', async () => {
+  const res = await getUserApi();
+  return res;
+});
+
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async (data: IRegistration) => {
+    const res = await updateUserApi(data);
+    return res;
+  }
+);
+
+export const logOut = createAsyncThunk('user/logOut', async () => {
+  const res = await logoutApi();
+});
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -80,6 +119,49 @@ export const userSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        state.isAuthCheced = true;
+      })
+      .addCase(getUserAp.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isAuthCheced = true;
+      })
+      .addCase(getUserAp.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.isAuthCheced = false;
+      })
+      .addCase(getUserAp.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        state.isAuthCheced = false;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.isAuthCheced = true;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        state.isAuthCheced = false;
+      })
+      .addCase(logOut.fulfilled, (state) => {
+        state.loading = false;
+        state.user = { name: '', email: '' };
+        state.isAuthCheced = false;
+      })
+      .addCase(logOut.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logOut.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
         state.isAuthCheced = true;
