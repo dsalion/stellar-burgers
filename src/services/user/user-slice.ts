@@ -87,6 +87,8 @@ export const updateUser = createAsyncThunk(
 
 export const logOut = createAsyncThunk('user/logOut', async () => {
   const res = await logoutApi();
+  deleteCookie('accessToken');
+  localStorage.removeItem('refreshToken');
 });
 
 export const checkUserAuth = createAsyncThunk(
@@ -179,9 +181,9 @@ export const userSlice = createSlice({
         state.isAuthChecked = false;
       })
       .addCase(logOut.fulfilled, (state) => {
+        console.log('lalala');
         state.loading = false;
-        state.user = { name: '', email: '' };
-        state.isAuthChecked = false;
+        state.user = null;
       })
       .addCase(logOut.pending, (state) => {
         state.loading = true;
