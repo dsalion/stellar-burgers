@@ -28,6 +28,7 @@ function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(checkUserAuth());
+    dispatch(getIngridients());
   }, [dispatch]);
 
   return (

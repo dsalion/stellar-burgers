@@ -15,7 +15,6 @@ export const Feed: FC = () => {
   console.log('orders', orders);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getIngridients());
     dispatch(getOrders());
   }, []);
   const handleGetFeeds = () => {

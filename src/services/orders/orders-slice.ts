@@ -14,11 +14,17 @@ export const sendOrder = createAsyncThunk(
   }
 );
 
+export const getUserOrders = createAsyncThunk('order/user', async () => {
+  const res = getOrdersApi();
+  return res;
+});
+
 export interface IOrdersState {
   orders: TOrder[];
   total: number;
   totalToday: number;
   order: TOrder | null;
+  userOrders: TOrder[];
   name: string | null;
   loading: boolean;
   error: string | null | undefined;
@@ -28,6 +34,7 @@ const initialState: IOrdersState = {
   orders: [],
   total: 0,
   totalToday: 0,
+  userOrders: [],
   order: null,
   name: null,
   loading: false,
@@ -47,7 +54,8 @@ export const ordersSlice = createSlice({
     getOrdersTotalAndToday: (state) => ({
       total: state.total,
       totalToday: state.totalToday
-    })
+    }),
+    userOrders: (state) => state.userOrders
   },
   extraReducers: (builder) => {
     builder
@@ -78,6 +86,19 @@ export const ordersSlice = createSlice({
       .addCase(sendOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(getUserOrders.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getUserOrders.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUserOrders.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.userOrders = action.payload;
       });
   }
 });
@@ -88,7 +109,8 @@ export const {
   getOrdersErrorSelector,
   getOrdersTotalSelector,
   getOrdersTotalTodaySelector,
-  getOrdersTotalAndToday
+  getOrdersTotalAndToday,
+  userOrders
 } = ordersSlice.selectors;
 
 export default ordersSlice.reducer;

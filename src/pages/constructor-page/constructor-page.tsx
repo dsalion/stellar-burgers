@@ -17,10 +17,6 @@ export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
   const isIngredientsLoading = useAppSelector(getIngridientsLoadingSelector);
   console.log('isIngredientsLoading', isIngredientsLoading);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(getIngridients());
-  }, []);
 
   return (
     <>
