@@ -10,6 +10,7 @@ export const sendOrder = createAsyncThunk(
   'order/sendOrder',
   async (data: string[]) => {
     const res = await orderBurgerApi(data);
+
     return res;
   }
 );

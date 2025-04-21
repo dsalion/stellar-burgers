@@ -13,8 +13,8 @@ import '../../index.css';
 import styles from './app.module.css';
 import { OnlyUnAuth, OnlyAuth } from '../Protected-route/protected-route';
 
-import { AppHeader, OrderInfo } from '@components';
-import { Route, Routes } from 'react-router-dom';
+import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import store, { useAppDispatch } from '../../services/store';
 import { Provider } from 'react-redux';
 import { useEffect } from 'react';
@@ -31,10 +31,17 @@ function App() {
     dispatch(getIngridients());
   }, [dispatch]);
 
+  const location = useLocation();
+  const background = location.state?.background;
+  const navigate = useNavigate();
+  function onClose() {
+    navigate(-1);
+  }
+
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route path='/login' element={<OnlyUnAuth component={<Login />} />} />
@@ -42,12 +49,61 @@ function App() {
           path='/register'
           element={<OnlyUnAuth component={<Register />} />}
         />
-        <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
+        <Route
+          path='/forgot-password'
+          element={<OnlyUnAuth component={<ForgotPassword />} />}
+        />
+        <Route
+          path='/reset-password'
+          element={<OnlyUnAuth component={<ResetPassword />} />}
+        />
         <Route path='/profile' element={<OnlyAuth component={<Profile />} />} />
-        <Route path='/profile/orders' element={<ProfileOrders />} />
+        <Route
+          path='/profile/orders'
+          element={<OnlyAuth component={<ProfileOrders />} />}
+        />
+        <Route path='ingredients/:id' element={<IngredientDetails />} />
+        <Route path='/feed/:number' element={<Feed />} />
+        <Route
+          path='/profile/orders/:number'
+          element={<OnlyUnAuth component={<OrderInfo />} />}
+        />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
+      {background && (
+        <Routes>
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal
+                title='Детали заказа'
+                children={<OrderInfo />}
+                onClose={onClose}
+              />
+            }
+          />
+          <Route
+            path='ingredients/:id'
+            element={
+              <Modal
+                title='Детали ингредиента'
+                children={<IngredientDetails />}
+                onClose={onClose}
+              />
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <Modal
+                title='Детали заказа'
+                children={<OrderInfo />}
+                onClose={onClose}
+              />
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 }

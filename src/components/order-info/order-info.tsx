@@ -4,18 +4,18 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useAppSelector } from '../../services/store';
 import { getIngridientsSelector } from '../../services/ingridients/ingridients-slice';
+import { useParams } from 'react-router-dom';
+import { getOrdersSelector } from '../../services/orders/orders-slice';
 
 export const OrderInfo: FC = () => {
+  const orderNumber = useParams().number;
+  const order = useAppSelector(getOrdersSelector);
+  console.log('orderNumber:', orderNumber);
+  console.log('orderN:', order);
   /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const orderData = order.find(
+    (element) => element.number === Number(orderNumber)
+  );
 
   const ingredients: TIngredient[] = useAppSelector(getIngridientsSelector);
 
