@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid'; // Импортируем библиотеку для генерации UUID
 import { TIngredient } from '@utils-types';
-import { stat } from 'fs';
 
 export interface IBurgerConstructorState {
   bun: TIngredient | null;
@@ -16,14 +16,25 @@ export const burgerConstructorSlice = createSlice({
   name: 'burgerConstructor',
   initialState,
   reducers: {
-    addIngridient: (state, action) => {
-      if (action.payload.type === 'bun') {
-        state.bun = action.payload;
-      } else {
-        state.ingredients.push(action.payload);
+    addIngridient: {
+      reducer: (state, action: PayloadAction<TIngredient>) => {
+        if (action.payload.type === 'bun') {
+          state.bun = action.payload;
+        } else {
+          state.ingredients.push(action.payload);
+        }
+      },
+      prepare: (ingredient: TIngredient) => {
+        const id = uuidv4();
+        return {
+          payload: {
+            ...ingredient,
+            uuid: id
+          }
+        };
       }
     },
-    removeIngridient: (state, action) => {
+    removeIngridient: (state, action: PayloadAction<{ index: number }>) => {
       state.ingredients.splice(action.payload.index, 1);
     },
     clearConstructor: (state) => {
@@ -33,12 +44,12 @@ export const burgerConstructorSlice = createSlice({
   },
   selectors: {
     selectBun: (state) => state.bun,
-    selectIngridient: (state) => state.ingredients,
+    selectIngridients: (state) => state.ingredients,
     selectBurger: (state) => state
   }
 });
 
-export const { selectBun, selectIngridient, selectBurger } =
+export const { selectBun, selectIngridients, selectBurger } =
   burgerConstructorSlice.selectors;
 
 export const { addIngridient, removeIngridient, clearConstructor } =

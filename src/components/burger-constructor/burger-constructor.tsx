@@ -1,7 +1,6 @@
 import { FC, useMemo } from 'react';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
-import { useSelector } from 'react-redux';
 import {
   clearConstructor,
   selectBurger
@@ -17,13 +16,6 @@ import {
 } from '../../services/orders/orders-slice';
 
 export const BurgerConstructor: FC = () => {
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-  // const constructorItems = {
-  //   bun: {
-  //     price: 0
-  //   },
-  //   ingredients: []
-  // };
   const constructorItems = useAppSelector(selectBurger);
   const user = useAppSelector(getUser);
   const navigate = useNavigate();
