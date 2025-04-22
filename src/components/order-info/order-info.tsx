@@ -1,14 +1,21 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { useAppSelector } from '../../services/store';
+import { useAppDispatch, useAppSelector } from '../../services/store';
 import { getIngridientsSelector } from '../../services/ingridients/ingridients-slice';
 import { useParams } from 'react-router-dom';
-import { getOrdersSelector } from '../../services/orders/orders-slice';
+import {
+  getOrders,
+  getOrdersSelector
+} from '../../services/orders/orders-slice';
 
 export const OrderInfo: FC = () => {
   const orderNumber = useParams().number;
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getOrders());
+  }, []);
   const order = useAppSelector(getOrdersSelector);
   console.log('orderNumber:', orderNumber);
   console.log('orderN:', order);

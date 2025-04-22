@@ -10,7 +10,6 @@ export const sendOrder = createAsyncThunk(
   'order/sendOrder',
   async (data: string[]) => {
     const res = await orderBurgerApi(data);
-
     return res;
   }
 );
@@ -27,6 +26,7 @@ export interface IOrdersState {
   order: TOrder | null;
   userOrders: TOrder[];
   name: string | null;
+  modalToggle: boolean;
   loading: boolean;
   error: string | null | undefined;
 }
@@ -38,6 +38,7 @@ const initialState: IOrdersState = {
   userOrders: [],
   order: null,
   name: null,
+  modalToggle: false,
   loading: false,
   error: null
 };
@@ -45,7 +46,11 @@ const initialState: IOrdersState = {
 export const ordersSlice = createSlice({
   name: 'orders',
   initialState,
-  reducers: {},
+  reducers: {
+    closeModal: (state) => {
+      state.order = null;
+    }
+  },
   selectors: {
     getOrdersSelector: (state) => state.orders,
     getOrdersLoadingSelector: (state) => state.loading,
@@ -56,7 +61,9 @@ export const ordersSlice = createSlice({
       total: state.total,
       totalToday: state.totalToday
     }),
-    userOrders: (state) => state.userOrders
+    userOrders: (state) => state.userOrders,
+    getModalToggler: (state) => state.modalToggle,
+    getCurrentOrdernameAndOrder: (state) => state.order
   },
   extraReducers: (builder) => {
     builder
@@ -77,12 +84,14 @@ export const ordersSlice = createSlice({
       .addCase(sendOrder.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.modalToggle = true;
       })
       .addCase(sendOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.order = action.payload.order;
         state.name = action.payload.name;
+        state.modalToggle = false;
       })
       .addCase(sendOrder.rejected, (state, action) => {
         state.loading = false;
@@ -111,7 +120,11 @@ export const {
   getOrdersTotalSelector,
   getOrdersTotalTodaySelector,
   getOrdersTotalAndToday,
-  userOrders
+  userOrders,
+  getModalToggler,
+  getCurrentOrdernameAndOrder
 } = ordersSlice.selectors;
+
+export const { closeModal } = ordersSlice.actions;
 
 export default ordersSlice.reducer;

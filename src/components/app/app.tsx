@@ -66,7 +66,7 @@ function App() {
         <Route path='/feed/:number' element={<Feed />} />
         <Route
           path='/profile/orders/:number'
-          element={<OnlyUnAuth component={<OrderInfo />} />}
+          element={<OnlyAuth component={<OrderInfo />} />}
         />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
