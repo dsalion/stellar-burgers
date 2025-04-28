@@ -2,11 +2,14 @@ describe('e2e тест конструктора', () => {
   beforeEach(() => {
     cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
       fixture: 'ingredients.json'
-    }).as('ingredients');
-  //   cy.intercept('**', (req) => {
-  //     console.log('Request URL:', req.url);
-  //     console.log('Request method:', req.method);
-  //   }).as('anyRequest');
+    });
+    cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
+      fixture: 'user.json'
+    })
+    //   cy.intercept('**', (req) => {
+    //     console.log('Request URL:', req.url);
+    //     console.log('Request method:', req.method);
+    //   }).as('anyRequest');
     cy.visit('http://localhost:4000/');
   });
 
