@@ -3,9 +3,6 @@ describe('e2e тест конструктора', () => {
     cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
       fixture: 'ingredients.json'
     });
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
-      fixture: 'user.json'
-    })
     //   cy.intercept('**', (req) => {
     //     console.log('Request URL:', req.url);
     //     console.log('Request method:', req.method);
