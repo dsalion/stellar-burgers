@@ -68,5 +68,9 @@ describe('e2e тест конструктора', () => {
       cy.get(`[data-cy=bun]`).should('not.exist');
       cy.get(`[data-cy=ingredient]`).should('not.exist');
     });
+    afterEach(() => {
+      cy.clearCookie('accessToken');
+      localStorage.removeItem('refreshToken');
+    });
   });
 });
