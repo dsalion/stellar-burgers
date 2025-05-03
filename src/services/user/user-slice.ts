@@ -29,7 +29,7 @@ export interface IUserState {
   isAuthChecked: boolean;
 }
 
-const initialState: IUserState = {
+export const initialState: IUserState = {
   user: null,
   error: null,
   loading: false,
@@ -181,7 +181,6 @@ export const userSlice = createSlice({
         state.isAuthChecked = false;
       })
       .addCase(logOut.fulfilled, (state) => {
-        console.log('lalala');
         state.loading = false;
         state.user = null;
       })
