@@ -8,7 +8,6 @@ import {
   updateUserApi
 } from '../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { error } from 'console';
 import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
 
 export interface IRegistration {
