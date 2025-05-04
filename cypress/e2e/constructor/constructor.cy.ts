@@ -34,8 +34,6 @@ describe('e2e тест конструктора', () => {
       overlay.click();
       cy.wait(1000);
       modal.should('not.exist');
-
-      //cy.get(`[data-cy=modal]`).invoke('css', 'visibility', 'visible');
     });
   });
 
@@ -53,9 +51,7 @@ describe('e2e тест конструктора', () => {
       cy.get('[data-cy=643d69a5c3f7b9001cfa093e]').find('button').click();
       cy.wait(1000);
       cy.get('[data-cy=643d69a5c3f7b9001cfa0942]').find('button').click();
-      //const bun = cy.get(`[data-cy=bun]`);
       cy.get(`[data-cy=bun]`).should('exist');
-      //const ingredient = cy.get(`[data-cy=ingredient]`);
       cy.get(`[data-cy=ingredient]`).should('exist');
 
       const submitBtn = cy.get(`[data-cy=submitBtn]`);
