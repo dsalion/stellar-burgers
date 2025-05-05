@@ -5,17 +5,12 @@ import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 import { TIngredient } from '@utils-types';
 
-import {
-  getIngridients,
-  getIngridientsSelector
-} from '../../services/ingridients/ingridients-slice';
+import { getIngridientsSelector } from '../../services/ingridients/ingridients-slice';
 import { useAppDispatch, useAppSelector } from '../../services/store';
 
 export const BurgerIngredients: FC = () => {
   /** TODO: взять переменные из стора */
   const ingridients = useAppSelector(getIngridientsSelector);
-
-  console.log('ingridients', ingridients);
   const buns: TIngredient[] = ingridients.filter((item) => item.type === 'bun');
   const mains: TIngredient[] = ingridients.filter(
     (item) => item.type === 'main'

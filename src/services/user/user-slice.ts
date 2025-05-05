@@ -6,9 +6,8 @@ import {
   registerUserApi,
   resetPasswordApi,
   updateUserApi
-} from '@api';
+} from '../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { error } from 'console';
 import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
 
 export interface IRegistration {
@@ -29,7 +28,7 @@ export interface IUserState {
   isAuthChecked: boolean;
 }
 
-const initialState: IUserState = {
+export const initialState: IUserState = {
   user: null,
   error: null,
   loading: false,
@@ -181,7 +180,6 @@ export const userSlice = createSlice({
         state.isAuthChecked = false;
       })
       .addCase(logOut.fulfilled, (state) => {
-        console.log('lalala');
         state.loading = false;
         state.user = null;
       })

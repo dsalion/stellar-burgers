@@ -1,4 +1,8 @@
-import { getFeedsApi, getOrdersApi, orderBurgerApi } from '@api';
+import {
+  getFeedsApi,
+  getOrdersApi,
+  orderBurgerApi
+} from '../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { TOrder } from '../../utils/types';
 
@@ -31,7 +35,7 @@ export interface IOrdersState {
   error: string | null | undefined;
 }
 
-const initialState: IOrdersState = {
+export const initialState: IOrdersState = {
   orders: [],
   total: 0,
   totalToday: 0,
